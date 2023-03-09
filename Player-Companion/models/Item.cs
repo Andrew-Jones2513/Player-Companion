@@ -1,31 +1,25 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace PlayerCompanion.models
+﻿namespace PlayerCompanion.models
 {
     internal class Item
     {
-        //Properties
+        #region Properties
         private string name;
         private int weight;
         private int price;
         private string description;
-        private string identifier;
+        #endregion
 
-        //Constructor
-        public Item(string name, int weight, int price, string description, string identifier)
+        #region Constructor
+        public Item(string name, int weight, int price, string description)
         {
             this.name = name;
             this.weight = weight;
             this.price = price;
             this.description = description;
-            this.identifier = identifier;
         }
+        #endregion
 
-        //Accessors
+        #region Accessors
         public string Name
         {
             get { return name; }
@@ -46,24 +40,21 @@ namespace PlayerCompanion.models
             get { return description; }
             set { description = value; }
         }
-        public string Identifier
-        {
-            get { return identifier; }
-            set { identifier = value; }
-        }
+        #endregion
     }
 
     internal class Weapon : Item
     {
-        //Properties
+        #region Properties
         private int dmgNum;
         private int dmgDie;
         private int dmgType;
         private int quality;
         private string[] props;
+        #endregion
 
-        //Constructor
-        public Weapon(string name, int weight, int price, string description, string identifier, int dmgNum, int dmgDie, int dmgType, string[] props) : base(name, weight, price, description, identifier)
+        #region Constructor
+        public Weapon(string name, int weight, int price, string description, int dmgNum, int dmgDie, int dmgType, string[] props) : base(name, weight, price, description)
         {
             this.dmgNum = dmgNum;
             this.dmgDie = dmgDie;
@@ -71,8 +62,9 @@ namespace PlayerCompanion.models
             this.quality = 0;
             this.props = props;
         }
+        #endregion
 
-        //Accessors
+        #region Accessors
         public int DmgNum
         {
             get { return dmgNum; }
@@ -98,8 +90,9 @@ namespace PlayerCompanion.models
             get { return props; }
             set { props = value; }
         }
+        #endregion
 
-        //Methods
+        #region Methods
         public string getDmgType()
         {
             // Converts the damage type to a string
@@ -165,26 +158,29 @@ namespace PlayerCompanion.models
         {
             return this.props.Contains("ranged");
         }
+        #endregion
     }
 
     internal class Armor : Item
     {
-        //Properties
+        #region Properties
         private int armorClass;
         private int strRequirement;
         private int dexMax;
         private int armorType;
+        #endregion
 
-        //Constructor
-        public Armor(string name, int weight, int price, string description, string identifier, int armorClass, int strRequirement, int dexMax, int armorType) : base(name, weight, price, description, identifier)
+        #region Constructor
+        public Armor(string name, int weight, int price, string description, int armorClass, int strRequirement, int dexMax, int armorType) : base(name, weight, price, description)
         {
             this.armorClass = armorClass;
             this.strRequirement = strRequirement;
             this.dexMax = dexMax;
             this.armorType = armorType;
         }
+        #endregion
 
-        //Accessors
+        #region Accessors
         public int ArmorClass
         {
             get { return this.armorClass; }
@@ -205,8 +201,9 @@ namespace PlayerCompanion.models
             get { return this.armorType; }
             set { if (value >= 0 && value <= 3) this.armorType = value; }
         }
+        #endregion
 
-        //Methods
+        #region Methods
         public int getAC(int dex, int bonus, bool hasShield)
         {
             // Returns the adjusted Armor Class of a character based on the armor, bonus, and if they
@@ -220,10 +217,12 @@ namespace PlayerCompanion.models
             switch (this.ArmorType)
             {
                 case 0:
-                    type = "light"; break;
+                    type = "natural"; break;
                 case 1:
-                    type = "medium"; break;
+                    type = "light"; break;
                 case 2:
+                    type = "medium"; break;
+                case 3:
                     type = "heavy"; break;
             }
             return type;
@@ -233,5 +232,6 @@ namespace PlayerCompanion.models
             // Checks to see if the character has the required strength to equip the armor
             return strRequirement <= strBonus;
         }
+        #endregion
     }
 }
